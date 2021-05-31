@@ -1,8 +1,6 @@
-<div id="gitment-ctn"></div> 
-<!-- <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script> -->
-<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-<script src="https://jjeejj.github.io/js/gitment.js"></script>
+<!-- <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
   id: "<%=url%>",
@@ -14,4 +12,24 @@ var gitment = new Gitment({
   },
 })
 gitment.render('gitment-ctn')
-</script>
+</script> -->
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<section id="comments">
+  <div class="gitalk" style="width:90%;margin:auto;">
+    <div id="gitalk-container"></div>
+    <script type="text/javascript">
+        const gitalk = new Gitalk({
+          clientID: '<%=theme.gitment_oauth.client_id%>',
+          clientSecret: '<%=theme.gitment_oauth.client_secret%>',
+          repo: '<%=theme.gitment_repo%>',      // The repository of store comments,
+          owner: '<%=theme.gitment_owner%>',
+          admin: ['<%=theme.gitment_owner%>'],
+          id: decodeURI(location.pathname),      // Ensure uniqueness and length less than 50
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        });
+
+        gitalk.render('gitalk-container');
+    </script>
+  </div>
+</section>
