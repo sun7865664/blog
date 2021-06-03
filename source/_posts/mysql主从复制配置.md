@@ -57,7 +57,7 @@ flush privileges;
 show master status;
 ```
 
-![Image text](./mysql主从复制配置/1.png)
+![Image text](./1.png)
 
 2、从数据库执行命令
 - 配置从服务器关于主服务器的信息
@@ -72,4 +72,4 @@ start slave;
 ```
 show slave status\G;
 ```
-![Image text](./mysql主从复制配置/2.png)
+![Image text](./2.png)
