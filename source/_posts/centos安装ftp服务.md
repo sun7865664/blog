@@ -1,3 +1,11 @@
+---
+title: centos安装ftp服务
+language: zh-CN
+date: 2021-12-07 15:53:41
+tags:
+- centos
+- ftp
+---
 ### centos安装ftp服务
 #### 1、安装vsftpd服务
 

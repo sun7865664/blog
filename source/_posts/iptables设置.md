@@ -1,3 +1,11 @@
+---
+title: iptables设置
+language: zh-CN
+date: 2021-10-18 15:53:41
+tags:
+- oracle漏洞
+- iptables
+---
 ### oracle漏洞修复
 
 ##### 一、数据库漏洞
