@@ -16,23 +16,31 @@ tags:
 ES天生就是分布式的，它知道如何管理多个节点来完成扩展和实现高可用性。意味应用不需要做任何的改动。
 
 ### 1、elasticsearch安装部署
+
 #### 1.1、**安装包下载**
+
 - 官网的下载地址：[下载地址](https://www.elastic.co/cn/downloads/elasticsearch)
 
 #### 1.2、**解压和运行**
+
 ##### 1.2.1、**解压安装包**
-	- **elasticsearch目录结构**![[Pasted image 20240514102525.png]]
-	- **目录名词解释**
->		bin：可执行文件在里面，运行es的命令就在这个里面，启动es也是在bin目录下启动
->		config：配置文件目录
->		JDK：java环境
->		lib：依赖的jar，类库
->		logs：日志文件
->		modules：es相关的模块
->		plugins：可以自己开发的插件 我们下载的插件也是放在里面
+
+- **elasticsearch目录结构**![[Pasted image 20240514102525.png]]
+  
+- **目录名词解释**
+
+> bin：可执行文件在里面，运行es的命令就在这个里面，启动es也是在bin目录下启动
+> config：配置文件目录
+> JDK：java环境
+> lib：依赖的jar，类库
+> logs：日志文件
+> modules：es相关的模块
+> plugins：可以自己开发的插件 我们下载的插件也是放在里面
 
 ##### 1.2.2、 **修改核心配置文件 elasticearch.yml**
-	- 最新版本（8.13.3）可以直接进入bin目录直接运行elasticsaearch.bat  初次运行中会自动配置相关参数，默认为https
+
+- 最新版本（8.13.3）可以直接进入bin目录直接运行elasticsaearch.bat  初次运行中会自动配置相关参数，默认为https
+
 ```yml
 # ======================== Elasticsearch Configuration =========================
 #
@@ -157,13 +165,16 @@ http.host: 0.0.0.0
 ```
 
 ##### 1.2.3、 **修改 jvm 参数(jvm.options)**
-	- 最新版（8.13.3）默认设置为物理机内存的50%，7.X版本（7.6.2)默认配置为1G
+
+- 最新版（8.13.3）默认设置为物理机内存的50%，7.X版本（7.6.2)默认配置为1G
+
 ```options
 -Xms512m  
 -Xmx512m
 ```
 
 ##### 1.2.4、 **添加用户（ linux平台）**
+
 ```bash
 # 1. 创建elastic用户组及elastic用户：
 groupadd elastic  
@@ -178,6 +189,7 @@ su elastic
 ```
 
 ##### 1.2.5、 **系统性能优化（ linux平台）**
+
 ```bash
 cat /etc/security/limits.conf
 * soft nofile 655360
@@ -192,13 +204,19 @@ sysctl -p
 ```
 
 ##### 1.2.6、 **启动elasticsearch**
-	- 进入`bin`目录
-	- `./elasticsearch `或`./elasticsearch.bat`
-	- 如后台运行，可执行`./elasticsearch -d`或`./elasticsearch.bat -d`
+
+- 进入`bin`目录
+
+- ` ./elasticsearch `或`./elasticsearch.bat`
+  
+- 如后台运行，可执行`./elasticsearch -d`或`./elasticsearch.bat -d`
 
 #### 1.3、集群部署
+
 - 集群部署参数配置（elasticsearch.yml）
+  
 - master数据节点
+  
 ```yml
 # ======================== Elasticsearch Configuration =========================
 #
@@ -329,6 +347,7 @@ gateway.recover_after_data_nodes: 3
 ```
 
 - 协调节点
+
 ```yml
 # ======================== Elasticsearch Configuration =========================
 #
@@ -457,22 +476,27 @@ gateway.recover_after_data_nodes: 3
 #----------------------- END SECURITY AUTO CONFIGURATION -------------------------
 
 ```
+
 - 节点角色说明：
-	- 主节点是管理集群状态的(对所有资源要求都不高)
-	- 协调节点是接受客户端请求并分发到相应数据节点的，并合并搜索结果(对网络资源要求高，对CPU和内存也有一定的要求)
-	- 数据节点是读写数据的(对内存、CPU和IO要求高)
-	- 注：一般来说，在生产环境中，为了节省资源一个节点一般都是有多个角色，很少将节点作为单一角色来使用
+  - 主节点是管理集群状态的(对所有资源要求都不高)
+  - 协调节点是接受客户端请求并分发到相应数据节点的，并合并搜索结果(对网络资源要求高，对CPU和内存也有一定的要求)
+  - 数据节点是读写数据的(对内存、CPU和IO要求高)
+  - 注：一般来说，在生产环境中，为了节省资源一个节点一般都是有多个角色，很少将节点作为单一角色来使用
 - 最小的集群：将一个节点当作所有角色来使用(每个节点既是数据节点，也是主节点和协调节点)
 - 初等规模：分成主节点和其他节点(数据节点也是协调节点)；分成协调节点和其他节点(数据节点也是主节点);
 - 中高等规模：将数据节点、主节点和协调节点分开
 
 ### 2、安装分词器
+
 #### 2.1、**分词器安装**
+
 ```bat
  .\elasticsearch-plugin.bat install https://get.infini.cloud/elasticsearch/analysis-ik/8.13.3
 ```
+
 #### 2.2、 分析器测试
-```
+
+```text
 GET /_analyze
 {
   "analyzer": "simple",
@@ -497,31 +521,35 @@ GET /_analyze
   "text": ["我是张三"]
 }
 ```
+
 - 新建词库或更新词库
 - 新建词库
-	- 新建.dic文件在分词器插件的配置目录（plugins/xxx/conf  或conf/xxx/）
-	- 修改`IKAnalyzer.cfg.xml`
+  - 新建.dic文件在分词器插件的配置目录（plugins/xxx/conf  或conf/xxx/）
+  - 修改`IKAnalyzer.cfg.xml`
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<comment>IK Analyzer 扩展配置</comment>
-	<!--用户可以在这里配置自己的扩展字典 -->
-	<entry key="ext_dict">XXX.dic</entry>
-	 <!--用户可以在这里配置自己的扩展停止词字典-->
-	<entry key="ext_stopwords"></entry>
-	<!--用户可以在这里配置远程扩展字典 -->
-	<!-- <entry key="remote_ext_dict">words_location</entry> -->
-	<!--用户可以在这里配置远程扩展停止词字典-->
-	<!-- <entry key="remote_ext_stopwords">words_location</entry> -->
+  <comment>IK Analyzer 扩展配置</comment>
+  <!--用户可以在这里配置自己的扩展字典 -->
+  <entry key="ext_dict">XXX.dic</entry>
+   <!--用户可以在这里配置自己的扩展停止词字典-->
+  <entry key="ext_stopwords"></entry>
+  <!--用户可以在这里配置远程扩展字典 -->
+  <!-- <entry key="remote_ext_dict">words_location</entry> -->
+  <!--用户可以在这里配置远程扩展停止词字典-->
+  <!-- <entry key="remote_ext_stopwords">words_location</entry> -->
 </properties>
-
 ```
+
 - 更新词库，将新增词添加到.dic的词库文件中
 
 ### 3、 **索引的基本操作**
+
 #### 3.1、新增或更新索引
-```
+
+```text
 POST /product/_doc/1
 {
   "name": "测试",
@@ -530,7 +558,8 @@ POST /product/_doc/1
 ```
 
 #### 3.2、批量新增索引
-```
+
+```text
 PUT /products/_bulk
 { "create": { } }
 { "name": "bb","type":"1"}
@@ -545,7 +574,8 @@ PUT /products/_bulk
 ```
 
 #### 3.3、查看索引
-```
+
+```text
 GET /products/_search
 {
   "query" : {
@@ -580,6 +610,7 @@ GET /products/_search
 ```
 
 #### 3.3、删除索引
-```
+
+```text
 DELETE /product/_doc/1
 ```
